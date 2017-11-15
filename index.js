@@ -29,9 +29,9 @@ const styles = StyleSheet.create({
   },
 
   nocontainer: {
-    position: 'absolute',    
-    top: 0,    
-    left: 0,        
+    position: 'absolute',
+    top: 0,
+    left: 0,
     width: 0.001,
     height: 0.001
   },
@@ -82,12 +82,22 @@ class BusyIndicator extends React.Component {
         width: this.props.overlayWidth,
         height: this.props.overlayHeight
       },
-      
+
       text: {
         color: this.props.textColor,
         fontSize: this.props.textFontSize
       }
     });
+    if (this.props.text) {
+      textContent = (
+        <Text
+          numberOfLines={this.props.textNumberOfLines}
+          style={[styles.text, customStyles.text]}>
+          {this.state.text}
+        </Text>
+      );
+    }
+
 
     return (
       <View style={styles.container}>
@@ -96,30 +106,12 @@ class BusyIndicator extends React.Component {
             color={this.props.color}
             size={this.props.size}
             style={styles.progressBar} />
-
-          <Text
-            numberOfLines={this.props.textNumberOfLines}
-            style={[styles.text, customStyles.text]}>
-            {this.state.text}
-          </Text>
+          {textContent}
         </View>
       </View>
     );
   }
 }
-
-BusyIndicator.propTypes = {
-  color: React.PropTypes.string,
-  overlayColor: React.PropTypes.string,
-  overlayHeight: React.PropTypes.number,
-  overlayWidth: React.PropTypes.number,
-  size: React.PropTypes.oneOf(['small', 'large']),
-  startVisible: React.PropTypes.bool,
-  text: React.PropTypes.string,
-  textColor: React.PropTypes.string,
-  textFontSize: React.PropTypes.number,
-  textNumberOfLines: React.PropTypes.number
-};
 
 BusyIndicator.defaultProps = {
   isDismissible: false,
